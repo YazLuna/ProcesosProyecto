@@ -1,3 +1,3 @@
 dataBase=jdbc:mysql://
-user=i
+user=
 password=

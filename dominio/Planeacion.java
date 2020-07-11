@@ -1,7 +1,6 @@
 package dominio;
 
 public class Planeacion {
-    private int porcentajeAvance;
     private String unidad;
     private String temas;
     private String fechas;
@@ -9,14 +8,6 @@ public class Planeacion {
 
     Planeacion(){
 
-    }
-
-    public int getPorcentajeAvance () {
-        return porcentajeAvance;
-    }
-
-    public void setPorcentajeAvance (int porcentajeAvance) {
-        this.porcentajeAvance = porcentajeAvance;
     }
 
     public String getUnidad () {
