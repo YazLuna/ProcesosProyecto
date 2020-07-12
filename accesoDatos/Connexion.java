@@ -1,7 +1,5 @@
 package accesoDatos;
 
-import com.mysql.cj.jdbc.exceptions.CommunicationsException;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -42,7 +40,7 @@ public class Connexion {
         }
         try {
             connexion=DriverManager.getConnection (dataBase,user,password);
-        } catch (CommunicationsException ex){
+        } catch (Exception ex){
             Logger.getLogger(accesoDatos.Connexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
