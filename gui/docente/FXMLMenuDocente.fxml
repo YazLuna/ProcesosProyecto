@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.docente.FXMLMenuDocenteController">
+   <children>
+      <Pane prefHeight="77.0" prefWidth="600.0" style="-fx-background-color: #6bb3f2;" />
+      <Button layoutX="92.0" layoutY="132.0" mnemonicParsing="false" text="Registrar Avance" />
+      <Button layoutX="92.0" layoutY="169.0" mnemonicParsing="false" text="Registrar Plan de Curso" />
+      <Button layoutX="92.0" layoutY="211.0" mnemonicParsing="false" text="Solicitar Edición de Plan de Curso" />
+      <Button layoutX="82.0" layoutY="258.0" mnemonicParsing="false" text="Editar de Plan de Curso" />
+   </children>
+</AnchorPane>
