@@ -17,6 +17,28 @@ public class MateriaDAOImpl implements IMateriaDAO{
         connexion= new Connexion();
     }
 
+    @Override
+    public boolean registrarMateria(int NRC,String nombre,String descripcion,String area,String periodo,String turno){
+        boolean registrar = false;
+        try{
+            connection = connexion.getConnection();
+            PreparedStatement sentenceMateria = connection.prepareStatement("INSERT INTO Materia(NRC, nombre, descripcion, area, periodo, turno) VALUES(?,?,?,?,?,?,)");
+            sentenceMateria.setInt(1, NRC);
+            sentenceMateria.setString(2, nombre);
+            sentenceMateria.setString(3, descripcion);
+            sentenceMateria.setString(4, area);
+            sentenceMateria.setString(5, periodo);
+            sentenceMateria.setString(6, turno);
+            sentenceMateria.executeQuery();
+            registrar = true;
+        }catch (SQLException ex) {
+            Logger.getLogger(MateriaDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            connexion.closeConnection();
+        }
+        return registrar;
+    }
+
     public List<Materia> getListMateria () {
         List<Materia> listaMateria = new ArrayList<>();
         try{
