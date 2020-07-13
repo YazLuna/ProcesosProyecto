@@ -28,7 +28,7 @@ public class Connexion {
     private void connect() throws SQLException{
         Properties properties = new Properties();
         try {
-            properties.load( accesoDatos.Connexion.class.getClassLoader().getResourceAsStream("dataaccess/propertiesDataAccess") );
+            properties.load( accesoDatos.Connexion.class.getClassLoader().getResourceAsStream("accesoDatos/propiedades") );
             dataBase = properties.getProperty("dataBase");
             user = properties.getProperty("user");
             password = properties.getProperty("password");

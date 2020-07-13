@@ -22,3 +22,17 @@
     -fx-font-size: 11pt;
     -fx-font-family: "Arial";
 }
+
+.radio-button.error{
+    -fx-border-color: #ff0000;
+    -fx-border-width: 2px ;
+}
+
+.radio-button.ok{
+    -fx-border-color: #00CC00;
+    -fx-border-width: 2px ;
+}
+.table-view{
+    -fx-font-size: 11pt;
+    -fx-font-family: "Arial";
+}
