@@ -30,7 +30,7 @@ public class FXMLGeneralController implements Initializable {
 
     }
 
-    public void cerrarSesion() {
+    public void cerrarSesionGeneral() {
         boolean salir = generarConfirmacion("¿Desea Cerrar Sesión");
         if (salir){
             try {
