@@ -1,18 +1,27 @@
 package gui.cliente;
 
 import accesoDatos.CuentaDAOImpl;
+import dominio.Genero;
+import dominio.Materia;
 import dominio.Numero;
 import dominio.Usuario;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import gui.FXMLGeneralController;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import logica.ValidacionGeneral;
 
 
@@ -29,7 +38,9 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
     @FXML private Button btnElegirCursos;
     @FXML private Button btnRegistrar;
     @FXML private Button btnCancelar;
-    private static List<String> listaMaterias;
+    @FXML private RadioButton rbSeleccionMujer;
+    @FXML private RadioButton rbSeleccionHombre;
+    private static List<Integer> seleccionadosNRC;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,10 +68,23 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
     }
 
     public void elegirCursos () {
-
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/cliente/FXMLElegirCursos.fxml"));
+        Stage stage = new Stage();
+        try {
+            Parent root1 = fxmlLoader.load();
+            stage.setScene(new Scene(root1));
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        FXMLElegirCursosController fxmlElegirCursosController = new FXMLElegirCursosController();
+        seleccionadosNRC = fxmlElegirCursosController.getListNRC();
     }
 
     public void registrar (){
+        removerEstilos();
         boolean esValidoDatos = validarDatos();
         if(esValidoDatos){
             validarCorreos();
@@ -70,7 +94,7 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
     }
 
     public void cancelar (){
-        abrirVentana("/gui/inicioSesion/FXMLIniciarSesion.fxml", btnCancelar);
+        generarCancelacion("¿Seguro desea cancelar?",btnCancelar,"/gui/inicioSesion/FXMLIniciarSesion.fxml");
     }
 
     public void validarRepetidoCorreo (){
@@ -91,16 +115,53 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
 
     public void ingresarDatos (){
         ValidacionGeneral validacionGeneral = new ValidacionGeneral();
-            Usuario usuario = new Usuario();
-            usuario.setNombre(validacionGeneral.eliminarEspacios(tfNombre.getText()));
-            usuario.setApellidos(validacionGeneral.eliminarEspacios(tfApellidos.getText()));
-            usuario.setTelefono(tfTelefono.getText());
-            usuario.setTipo("Cliente");
-            usuario.setRFC(tfRFC.getText());
-            usuario.setCorreo(tfCorreo.getText());
-            usuario.setCorreoAlterno(tfCorreoAlterno.getText());
-            usuario.setContrasenia(pfContraseña.getText());
-            usuario.getFechaNacimiento();
+        Usuario usuario = new Usuario();
+        usuario.setNombre(validacionGeneral.eliminarEspacios(tfNombre.getText()));
+        usuario.setApellidos(validacionGeneral.eliminarEspacios(tfApellidos.getText()));
+        usuario.setTelefono(tfTelefono.getText());
+        usuario.setTipo("Cliente");
+        usuario.setRFC(tfRFC.getText());
+        usuario.setCorreo(tfCorreo.getText());
+        usuario.setCorreoAlterno(tfCorreoAlterno.getText());
+        usuario.setContrasenia(pfContraseña.getText());
+        String fecha = dpFechaNacimiento.getEditor().getText();
+        String[] fechaNacimiento = fecha.split("/");
+        String formatoFecha = fechaNacimiento[2]+"-"+fechaNacimiento[1]+"-"+fechaNacimiento[0];
+        usuario.setFechaNacimiento(formatoFecha);
+        if(rbSeleccionMujer.isSelected()){
+            usuario.setGenero(Genero.MUJER.getGenero());
+        }else {
+            usuario.setGenero(Genero.HOMBRE.getGenero());
+        }
+        registrarUsuarioCompleto(usuario);
+    }
+
+    public void registrarUsuarioCompleto (Usuario usuario){
+        CuentaDAOImpl cuentaDAO = new CuentaDAOImpl();
+        boolean esRegistroUsuario = Usuario.registrarUsuario(usuario);
+        if(esRegistroUsuario){
+            int idUsuario = Usuario.getUsuario(usuario.getRFC());
+            if(idUsuario != Numero.CERO.getNumero()){
+                boolean esRegistroCuenta = cuentaDAO.crearCuenta(usuario.getCorreo(),usuario.getCorreoAlterno(),usuario.getContrasenia(),idUsuario);
+                if(esRegistroCuenta){
+                    if(seleccionadosNRC.size()>Numero.CERO.getNumero()){
+                        for (int index=Numero.CERO.getNumero(); index<seleccionadosNRC.size();index++){
+                            Materia.registrarMateriaUsuario(seleccionadosNRC.get(index),idUsuario);
+                        }
+                        generarInformation("Registró exitosamente");
+                    }else {
+                        generarInformation("Registró exitosamente");
+                    }
+                    abrirVentana("/gui/inicioSesion/FXMLIniciarSesion.fxml",btnRegistrar);
+                }else {
+                    generarError("No pudo registrarse");
+                }
+            }else {
+                generarError("No se encontro el usuario");
+            }
+        }else {
+            generarError("No pudo registrarse");
+        }
     }
 
     public void validarTelefonoRFCUsuario (){
@@ -179,6 +240,8 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
         pfContraseña.getStyleClass().remove("error");
         pfConfirmacion.getStyleClass().remove("error");
         dpFechaNacimiento.getEditor().getStyleClass().remove("error");
+        rbSeleccionHombre.getStyleClass().remove("error");
+        rbSeleccionMujer.getStyleClass().remove("error");
     }
 
     public boolean validarDatos (){
@@ -239,8 +302,8 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
 
         boolean esValidoFechaNacimiento = validacionGeneral.validarPalabra(dpFechaNacimiento.getEditor().getText());
         if(esValidoFechaNacimiento){
-            boolean esValidoFAñoNacimiento = validacionGeneral.validarAño(dpFechaNacimiento.getEditor().getText());
-            if(esValidoFAñoNacimiento){
+            boolean esValidoAñoNacimiento = validacionGeneral.validarAño(dpFechaNacimiento.getEditor().getText());
+            if(esValidoAñoNacimiento){
                 dpFechaNacimiento.getEditor().getStyleClass().add("ok");
             }else{
                 dpFechaNacimiento.getEditor().getStyleClass().add("error");
@@ -258,6 +321,15 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
             tfTelefono.getStyleClass().add("error");
             esValidoDatos=false;
         }
+
+        boolean seleccionMujer = rbSeleccionMujer.isSelected();
+        boolean seleccionHombre = rbSeleccionHombre.isSelected();
+        if(!seleccionHombre && !seleccionMujer){
+            rbSeleccionHombre.getStyleClass().add("error");
+            rbSeleccionMujer.getStyleClass().add("error");
+            esValidoDatos=false;
+        }
+
          return  esValidoDatos;
     }
 }
