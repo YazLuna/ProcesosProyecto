@@ -5,9 +5,9 @@ public class Unidad {
     private String temas;
     private String fechas;
     private String tareasPracticas;
-    private String porcentajeAvance;
+    private int porcentajeAvance;
 
-    Unidad(){
+    public Unidad(){
 
     }
 
@@ -41,5 +41,13 @@ public class Unidad {
 
     public void setTareasPracticas (String tareasPracticas) {
         this.tareasPracticas = tareasPracticas;
+    }
+
+    public int getPorcentajeAvance () {
+        return  porcentajeAvance;
+    }
+
+    public void setPorcentajeAvance (int porcentajeAvance) {
+        this.porcentajeAvance = porcentajeAvance;
     }
 }
