@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.cliente.FXMLMenuClienteController">
+   <children>
+      <Pane minWidth="-Infinity" prefHeight="93.0" prefWidth="600.0" style="-fx-background-color: #6bb3f2;">
+         <children>
+            <Label layoutX="253.0" layoutY="31.0" text="Cliente" textFill="#ff1f5e">
+               <font>
+                  <Font name="Arial Bold" size="28.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnCerrarSesion" layoutX="482.0" layoutY="34.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="455.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logout.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Button alignment="BOTTOM_CENTER" layoutX="81.0" layoutY="164.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="140.0" prefWidth="188.0" style="-fx-background-color: #6bb3f2;" text="Cursos Seleccionados" textAlignment="CENTER" textFill="#ff1f5e" textOverrun="CENTER_WORD_ELLIPSIS">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" layoutX="344.0" layoutY="164.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="188.0" style="-fx-background-color: #6bb3f2;" text="Elegir Cursos" textAlignment="CENTER" textFill="#ff1f5e">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="131.0" layoutX="115.0" layoutY="179.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/list.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="83.0" fitWidth="158.0" layoutX="375.0" layoutY="184.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/update.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

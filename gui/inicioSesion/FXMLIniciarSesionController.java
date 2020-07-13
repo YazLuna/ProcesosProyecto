@@ -43,7 +43,7 @@ public class FXMLIniciarSesionController extends FXMLGeneralController implement
 							abrirVentana("/gui/docente/FXMLMenuDocente.fxml", btnIniciarSesion);
 							break;
 						case "Cliente":
-							abrirVentana("/gui/docente/FXMLMenuDocente.fxml", btnIniciarSesion);
+							abrirVentana("/gui/cliente/FXMLMenuCliente.fxml", btnIniciarSesion);
 							break;
 						default: generarInformation(tipo);
 					}

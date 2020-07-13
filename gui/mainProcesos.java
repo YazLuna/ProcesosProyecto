@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logica.ValidacionGeneral;
 
 public class mainProcesos extends Application {
     @Override
@@ -15,7 +16,6 @@ public class mainProcesos extends Application {
         stageLogin.setResizable(false);
         stageLogin.show();
     }
-
     public static void main(String[] args) {
         launch(args);
     }

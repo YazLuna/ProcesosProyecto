@@ -106,4 +106,18 @@ public class Usuario {
         esRepetidoUsuario = usuarioDAO.validarRepetirUsuario(telefono,RFC);
         return esRepetidoUsuario;
     }
+
+    public static boolean registrarUsuario (Usuario usuario) {
+        UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl();
+        boolean esRegistroUsuario;
+        esRegistroUsuario = usuarioDAO.agregarUsuario(usuario);
+        return esRegistroUsuario;
+    }
+
+    public static int getUsuario (String RFC) {
+        UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl();
+        int idUsuario;
+        idUsuario = usuarioDAO.buscarUsuario(RFC);
+        return idUsuario;
+    }
 }
