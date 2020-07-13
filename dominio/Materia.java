@@ -9,6 +9,9 @@ public class Materia {
     private int NRC;
     private String nombre;
     private String descripcion;
+    private String area;
+    private String periodo;
+    private String turno;
     private RadioButton rbSeleccion;
 
     public Materia (){
@@ -47,6 +50,18 @@ public class Materia {
         this.rbSeleccion = rbSeleccion;
     }
 
+    public void setTurno(String turno) { this.turno = turno; }
+
+    public String getTurno() { return turno; }
+
+    public void setPeriodo(String periodo) { this.periodo = periodo; }
+
+    public String getPeriodo() { return periodo; }
+
+    public void setArea(String area) { this.area = area; }
+
+    public String getArea() { return area; }
+    
     public static List<Materia> getListMateria (){
         List<Materia> listaMateria;
         MateriaDAOImpl materiaDAO = new MateriaDAOImpl();
@@ -59,5 +74,12 @@ public class Materia {
         MateriaDAOImpl materiaDAO = new MateriaDAOImpl();
         esRegistroMateriaUsuario =materiaDAO.registrarUsuarioMateria(NRC,idUsuario);
         return esRegistroMateriaUsuario;
+    }
+
+    public static boolean registrarMateriaAdministrador(int NRC,String nombre,String descripcion,String area,String periodo,String turno){
+        boolean registrar;
+        MateriaDAOImpl materiaDAO = new MateriaDAOImpl();
+        registrar = materiaDAO.registrarMateria(NRC, nombre, descripcion, area, periodo, turno);
+        return registrar;
     }
 }
