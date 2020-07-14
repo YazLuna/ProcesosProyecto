@@ -24,7 +24,7 @@ public class MateriaDAOImpl implements IMateriaDAO{
         boolean registrar = false;
         try{
             connection = connexion.getConnection();
-            PreparedStatement sentenceMateria = connection.prepareStatement("INSERT INTO Materia(NRC, nombre, descripcion, periodo, turno, area) VALUES(?,?,?,?,?,?,)");
+            PreparedStatement sentenceMateria = connection.prepareStatement("INSERT INTO Materia(NRC, nombre, decripcion, periodo, turno, area) VALUES(?,?,?,?,?,?)");
             sentenceMateria.setInt(1, materia.getNRC());
             sentenceMateria.setString(2, materia.getNombre());
             sentenceMateria.setString(3, materia.getDescripcion());
