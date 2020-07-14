@@ -64,4 +64,10 @@ public class SolicitudModificacion {
 		boolean resultado = solicitudModificacionDAO.guardarSolicitudModificacion(solicitudModificacion);
 		return resultado;
 	}
+
+	public static boolean tienePlanCurso (int numeroPersonal) {
+		SolicitudModificacionDAOImpl solicitudModificacionDAO = new SolicitudModificacionDAOImpl();
+		boolean resultado = solicitudModificacionDAO.tienePlanCurso(numeroPersonal);
+		return resultado;
+	}
 }

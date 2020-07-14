@@ -84,4 +84,24 @@ public class SolicitudModificacionDAOImpl {
 		}
 		return result;
 	}
+
+	public boolean tienePlanCurso(int numeroPersonal){
+		boolean tiene = false;
+		try{
+			connection = connexion.getConnection();
+			String queryPlan = "SELECT nombre FROM Materia, Academico, PlanCurso WHERE Materia.numeroPersonal = Academico.numeroPersonal AND" +
+					" Academico.numeroPersonal =? AND PlanCurso.NRC = Materia.NRC";
+			PreparedStatement sentence = connection.prepareStatement(queryPlan);
+			sentence.setInt(1, numeroPersonal);
+			results= sentence.executeQuery();
+			while(results.next()){
+				tiene = true;
+			}
+		}catch (SQLException ex){
+			Logger.getLogger(SolicitudModificacionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+		}finally{
+			connexion.closeConnection();
+		}
+		return tiene;
+	}
 }
