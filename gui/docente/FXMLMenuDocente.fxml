@@ -19,8 +19,8 @@
       </Button>
       <Label layoutX="8.0" layoutY="55.0" text="Docente" textFill="WHITE"/>
    </Pane>
-   <Button fx:id="btnRegistrarAvance" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="118.0"
-           mnemonicParsing="false" onAction="#registrarAvance" prefHeight="120.0" prefWidth="200.0"
+   <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="118.0"
+           mnemonicParsing="false" prefHeight="120.0" prefWidth="200.0"
            style="-fx-background-color: #6bb3f2;" text="Registrar Avance" textAlignment="CENTER" textFill="WHITE">
       <font>
          <Font name="System Bold" size="12.0"/>
@@ -32,9 +32,9 @@
          <Font name="System Bold" size="12.0"/>
       </font>
    </Button>
-   <Button alignment="BOTTOM_CENTER" layoutX="309.0" layoutY="248.0" mnemonicParsing="false" prefHeight="120.0"
-           prefWidth="200.0" style="-fx-background-color: #6bb3f2;" text="Solicitar Edición Plan de Curso"
-           textFill="WHITE">
+   <Button fx:id="btnSolicitarEdicion" alignment="BOTTOM_CENTER" layoutX="309.0" layoutY="248.0" mnemonicParsing="false"
+           onAction="#solicitarEdicion" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #6bb3f2;"
+           text="Solicitar Edición Plan de Curso" textFill="WHITE">
       <font>
          <Font name="System Bold" size="12.0"/>
       </font>
