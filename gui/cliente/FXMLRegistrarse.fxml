@@ -18,7 +18,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="580.0" style="-fx-background-color: #ffffff;">
                   <Pane layoutY="-1.0" minWidth="-Infinity" prefHeight="93.0" prefWidth="583.0" style="-fx-background-color: #6bb3f2;">
-                        <Label layoutX="228.0" layoutY="27.0" text="Registrarse" textFill="#ff1f5e">
+                        <Label layoutX="228.0" layoutY="27.0" text="Registrarse" textFill="#ffffff">
                            <font>
                               <Font name="Arial Bold" size="28.0" />
                            </font>

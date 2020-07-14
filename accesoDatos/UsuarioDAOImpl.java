@@ -20,10 +20,10 @@ public class UsuarioDAOImpl implements IUsuarioDAO{
 
     @Override
     public boolean agregarUsuario(Usuario usuario) {
-        boolean seCreoCuenta= false;
+        boolean seCreoUsuario= false;
         try{
             connection = connexion.getConnection();
-            PreparedStatement sentenceCuenta = connection.prepareStatement("INSERT INTO Cuenta(telefono,nombre,apellido" +
+            PreparedStatement sentenceCuenta = connection.prepareStatement("INSERT INTO Usuario(telefono,nombre,apellido" +
                     ",tipo,RFC,fechaNacimiento,genero) VALUES (?,?,?,?,?,?,?)");
             sentenceCuenta.setString(1, usuario.getTelefono());
             sentenceCuenta.setString(2, usuario.getNombre());
@@ -33,13 +33,13 @@ public class UsuarioDAOImpl implements IUsuarioDAO{
             sentenceCuenta.setString(6, usuario.getFechaNacimiento());
             sentenceCuenta.setInt(7, usuario.getGenero());
             sentenceCuenta.executeUpdate();
-            seCreoCuenta= true;
+            seCreoUsuario= true;
         }catch (SQLException ex) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             connexion.closeConnection();
         }
-        return seCreoCuenta;
+        return seCreoUsuario;
     }
 
     @Override

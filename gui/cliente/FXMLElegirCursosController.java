@@ -62,6 +62,8 @@ public class FXMLElegirCursosController extends FXMLGeneralController implements
                 seleccionadosNRC.add(listaMateria.get(index).getNRC());
             }
         }
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
+        stage.close();
     }
 
     public  List<Integer> getListNRC (){
