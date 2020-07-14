@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -48,6 +49,7 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
     }
 
     public void comenzarComponentes (){
+        seleccionadosNRC = new ArrayList<>();
         limitTextField(tfNombre,50);
         prohibitNumberTextField(tfNombre);
         limitTextField(tfApellidos,50);
@@ -113,6 +115,20 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
         }
     }
 
+    public void concidenciaRFCFechaNacimiento () {
+        ValidacionGeneral validacionGeneral = new ValidacionGeneral();
+        boolean esIgualRFC = validacionGeneral.validarConcidenciaRFC(tfRFC.getText(), dpFechaNacimiento.getEditor().getText());
+        if(esIgualRFC){
+            validarRepetidoCorreo();
+        }else {
+            tfRFC.getStyleClass().remove("ok");
+            dpFechaNacimiento.getEditor().getStyleClass().remove("ok");
+            tfRFC.getStyleClass().add("error");
+            dpFechaNacimiento.getEditor().getStyleClass().add("error");
+            generarError("El RFC no coincide con el Fecha de Nacimiento");
+        }
+    }
+
     public void ingresarDatos (){
         ValidacionGeneral validacionGeneral = new ValidacionGeneral();
         Usuario usuario = new Usuario();
@@ -123,7 +139,8 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
         usuario.setRFC(tfRFC.getText());
         usuario.setCorreo(tfCorreo.getText());
         usuario.setCorreoAlterno(tfCorreoAlterno.getText());
-        usuario.setContrasenia(pfContraseña.getText());
+        String contraseniaEncriptada = encryptPassword(pfContraseña.getText());
+        usuario.setContrasenia(contraseniaEncriptada);
         String fecha = dpFechaNacimiento.getEditor().getText();
         String[] fechaNacimiento = fecha.split("/");
         String formatoFecha = fechaNacimiento[2]+"-"+fechaNacimiento[1]+"-"+fechaNacimiento[0];
@@ -199,7 +216,7 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
 
     public void validarContrasenia (){
         if(pfContraseña.getText().equals(pfConfirmacion.getText())){
-            validarRepetidoCorreo();
+            concidenciaRFCFechaNacimiento();
         }else {
             pfConfirmacion.getStyleClass().remove("ok");
             pfContraseña.getStyleClass().remove("ok");
