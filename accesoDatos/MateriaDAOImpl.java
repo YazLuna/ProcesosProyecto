@@ -43,10 +43,10 @@ public class MateriaDAOImpl implements IMateriaDAO{
         boolean seRegistroMateriaUsuario= false;
         try{
             connection = connexion.getConnection();
-            PreparedStatement sentenceCuenta = connection.prepareStatement("INSERT INTO Cliente_Materia VALUES (?,?)");
-            sentenceCuenta.setInt(1, NRC);
-            sentenceCuenta.setInt(2, idUsuario);
-            sentenceCuenta.executeUpdate();
+            PreparedStatement sentenceMateria = connection.prepareStatement("INSERT INTO Cliente_Materia VALUES (?,?)");
+            sentenceMateria.setInt(1, idUsuario);
+            sentenceMateria.setInt(2, NRC);
+            sentenceMateria.executeUpdate();
             seRegistroMateriaUsuario= true;
         }catch (SQLException ex) {
             Logger.getLogger(MateriaDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
