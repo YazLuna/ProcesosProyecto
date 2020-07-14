@@ -5,7 +5,10 @@ import dominio.SolicitudModificacion;
 import gui.FXMLGeneralController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.List;
@@ -17,7 +20,7 @@ public class FXMLSolicitarEdicionController extends FXMLGeneralController implem
     @FXML private TableColumn<Materia, Integer> tcNRC;
     @FXML private Button btnSolicitar;
     @FXML private Button btnCancelar;
-    @FXML private TextArea taMotivo;
+    @FXML private TextField tfMotivo;
     public static int numeroPersonal;
 
     @Override
@@ -41,17 +44,21 @@ public class FXMLSolicitarEdicionController extends FXMLGeneralController implem
         if (materia == null) {
             generarAlerta("Por favor seleccione una fila de la tabla");
         } else{
-            SolicitudModificacion solicitudModificacion = new SolicitudModificacion();
-            solicitudModificacion.setMotivoCambio(taMotivo.getText());
-            solicitudModificacion.setNRC(materia.getNRC());
-            solicitudModificacion.setNumeroPersonal(numeroPersonal);
-            boolean resultado = SolicitudModificacion.guardarSolicitudModificacion(solicitudModificacion);
-            if (resultado) {
-                generarInformation("Permiso solicitado exitosamente");
-            }else{
-                generarError("No hay conexión con la base de datos, intente más tarde");
+            if(validateEmpty(tfMotivo.getText())) {
+                SolicitudModificacion solicitudModificacion = new SolicitudModificacion();
+                solicitudModificacion.setMotivoCambio(tfMotivo.getText());
+                solicitudModificacion.setNRC(materia.getNRC());
+                solicitudModificacion.setNumeroPersonal(numeroPersonal);
+                boolean resultado = SolicitudModificacion.guardarSolicitudModificacion(solicitudModificacion);
+                if (resultado) {
+                    generarInformation("Permiso solicitado exitosamente");
+                }else{
+                    generarError("No hay conexión con la base de datos, intente más tarde");
+                }
+                abrirVentana("/gui/docente/FXMLMenuDocente.fxml", btnSolicitar);
+            } else{
+                tfMotivo.getStyleClass().add("error");
             }
-            abrirVentana("/gui/docente/FXMLMenuDocente.fxml", btnSolicitar);
         }
     }
 

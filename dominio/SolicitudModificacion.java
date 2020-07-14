@@ -11,7 +11,7 @@ public class SolicitudModificacion {
 	private int numeroPersonal;
 
 	public SolicitudModificacion () {
-		setMotivoCambio("Solicitado");
+		setEstado("Solicitado");
 	}
 
 	public void setMotivoCambio (String motivoCambio) {

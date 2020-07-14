@@ -219,4 +219,12 @@ public class FXMLGeneralController implements Initializable {
         }
         return passwordEncrypt;
     }
+
+    public boolean validateEmpty (String works) {
+        boolean result=false;
+        if(works.length() > 0){
+            result=true;
+        }
+        return result;
+    }
 }
