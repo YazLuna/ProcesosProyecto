@@ -17,6 +17,6 @@ public class FXMLMenuClienteController extends FXMLGeneralController implements 
     }
 
     public void cerrarSesion () {
-        abrirVentana("/gui/inicioSesion/FXMLIniciarSesion.fxml",btnCerrarSesion);
+        generarCancelacion("¿Seguro desea cerrar sesión?",btnCerrarSesion,"/gui/inicioSesion/FXMLIniciarSesion.fxml");
     }
 }

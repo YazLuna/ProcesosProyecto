@@ -31,7 +31,7 @@ public class FXMLIniciarSesionController extends FXMLGeneralController implement
 		boolean esValidoInformacion = validateInformation();
 		if(esValidoInformacion) {
 			String correo = tfNombreUsuario.getText();
-			String contrasenia = pfContraseña.getText();
+			String contrasenia = encryptPassword(pfContraseña.getText());
 			CuentaDAOImpl cuentaDAO= new CuentaDAOImpl();
 			int esCuenta = cuentaDAO.buscarCuentaUsuario(correo,contrasenia);
 			if(esCuenta== Numero.CERO.getNumero()){

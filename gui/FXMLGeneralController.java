@@ -16,11 +16,14 @@ import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.codec.binary.Hex;
 
 public class FXMLGeneralController implements Initializable {
     @FXML private Button btnCerrarSesion;
@@ -200,5 +203,20 @@ public class FXMLGeneralController implements Initializable {
                 }
             }
         });
+    }
+
+    public String encryptPassword(String password) {
+        String passwordEncrypt = null;
+        try {
+            MessageDigest md;
+            md = MessageDigest.getInstance("SHA-512");
+            md.update(password.getBytes());
+            byte[] mb = md.digest();
+            passwordEncrypt = String.valueOf(Hex.encodeHex(mb));
+        } catch (NoSuchAlgorithmException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create an encrypt Password", e);
+        }
+        return passwordEncrypt;
     }
 }
