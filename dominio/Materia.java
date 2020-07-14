@@ -76,10 +76,10 @@ public class Materia {
         return esRegistroMateriaUsuario;
     }
 
-    public static boolean registrarMateriaAdministrador(int NRC,String nombre,String descripcion,String area,String periodo,String turno){
+    public static boolean registrarMateriaAdministrador(Materia materia){
         boolean registrar;
         MateriaDAOImpl materiaDAO = new MateriaDAOImpl();
-        registrar = materiaDAO.registrarMateria(NRC, nombre, descripcion, area, periodo, turno);
+        registrar = materiaDAO.registrarMateria(materia);
         return registrar;
     }
 }

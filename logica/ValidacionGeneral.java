@@ -55,6 +55,14 @@ public class ValidacionGeneral {
         return esValidoTelefono;
     }
 
+    public boolean validarRNC (String nrc) {
+        boolean esValidoNRC;
+        Pattern pattern = Pattern.compile("[0-9]{10}");
+        Matcher mather = pattern.matcher(nrc);
+        esValidoNRC = mather.find();
+        return esValidoNRC;
+    }
+
     public boolean validarContrasenia (String contrasenia) {
         Pattern pattern = Pattern
                 .compile("[A-Za-z0-9]{10,20}");
