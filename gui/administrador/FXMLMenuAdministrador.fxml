@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="283.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.administrador.FXMLMenuAdministradorController">
+   <children>
+      <Pane prefHeight="97.0" prefWidth="606.0" style="-fx-background-color: #6bb3f2;">
+         <children>
+            <Label layoutX="162.0" layoutY="32.0" text="Menu Administrador" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="29.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnCerrarSesion" layoutX="484.0" layoutY="19.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar sesion ">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Button fx:id="btnRegistrarMateria" layoutX="183.0" layoutY="125.0" mnemonicParsing="false" onAction="#registrarMateria" text="Registrar materia">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRegistrarDocente" layoutX="180.0" layoutY="204.0" mnemonicParsing="false" onAction="#registrarDocente" text="Registrar docente">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
