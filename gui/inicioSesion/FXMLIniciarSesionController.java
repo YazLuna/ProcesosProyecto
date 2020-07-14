@@ -1,6 +1,8 @@
 package gui.inicioSesion;
 
-import gui.administrador.FXMLMenuAdministradorController;
+import dominio.SolicitudModificacion;
+import gui.docente.FXMLMenuDocenteController;
+import gui.docente.FXMLSolicitarEdicionController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,10 +42,10 @@ public class FXMLIniciarSesionController extends FXMLGeneralController implement
 				if(esCuenta== Numero.UNO.getNumero()){
 					String tipo = cuentaDAO.tipoUsuario(correo,contrasenia);
 					switch (tipo) {
-						case "Administrador":
-							abrirVentana("/gui/administrador/ FXMLMenuAdministrador.fxml", btnIniciarSesion);
-							break;
 						case "Docente":
+							Integer numeroPersonal = SolicitudModificacion.buscarDocente(correo, contrasenia);
+							FXMLSolicitarEdicionController.numeroPersonal = numeroPersonal;
+							FXMLMenuDocenteController.numeroPersonal = numeroPersonal;
 							abrirVentana("/gui/docente/FXMLMenuDocente.fxml", btnIniciarSesion);
 							break;
 						case "Cliente":

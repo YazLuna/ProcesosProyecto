@@ -33,7 +33,7 @@ public class FXMLGeneralController implements Initializable {
 
     }
 
-    public void cerrarSesion() {
+    public void cerrarSesionGeneral() {
         boolean salir = generarConfirmacion("¿Desea Cerrar Sesión");
         if (salir){
             try {
@@ -218,5 +218,13 @@ public class FXMLGeneralController implements Initializable {
             logger.log(Level.SEVERE, "Failed to create an encrypt Password", e);
         }
         return passwordEncrypt;
+    }
+
+    public boolean validateEmpty (String works) {
+        boolean result=false;
+        if(works.length() > 0){
+            result=true;
+        }
+        return result;
     }
 }
