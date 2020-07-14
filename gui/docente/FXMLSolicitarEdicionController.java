@@ -40,22 +40,26 @@ public class FXMLSolicitarEdicionController extends FXMLGeneralController implem
     }
 
     public void solicitar() {
+        tfMotivo.getStyleClass().remove("error");
         Materia materia = tvMaterias.getSelectionModel().getSelectedItem();
         if (materia == null) {
             generarAlerta("Por favor seleccione una fila de la tabla");
         } else{
             if(validateEmpty(tfMotivo.getText())) {
-                SolicitudModificacion solicitudModificacion = new SolicitudModificacion();
-                solicitudModificacion.setMotivoCambio(tfMotivo.getText());
-                solicitudModificacion.setNRC(materia.getNRC());
-                solicitudModificacion.setNumeroPersonal(numeroPersonal);
-                boolean resultado = SolicitudModificacion.guardarSolicitudModificacion(solicitudModificacion);
-                if (resultado) {
-                    generarInformation("Permiso solicitado exitosamente");
-                }else{
-                    generarError("No hay conexión con la base de datos, intente más tarde");
+                boolean confirrmar  = generarConfirmacion("¿Seguro que desea solicitar el permiso?");
+                if (confirrmar ) {
+                    SolicitudModificacion solicitudModificacion = new SolicitudModificacion();
+                    solicitudModificacion.setMotivoCambio(tfMotivo.getText());
+                    solicitudModificacion.setNRC(materia.getNRC());
+                    solicitudModificacion.setNumeroPersonal(numeroPersonal);
+                    boolean resultado = SolicitudModificacion.guardarSolicitudModificacion(solicitudModificacion);
+                    if (resultado) {
+                        generarInformation("Permiso solicitado exitosamente");
+                    }else{
+                        generarError("No hay conexión con la base de datos, intente más tarde");
+                    }
+                    abrirVentana("/gui/docente/FXMLMenuDocente.fxml", btnSolicitar);
                 }
-                abrirVentana("/gui/docente/FXMLMenuDocente.fxml", btnSolicitar);
             } else{
                 tfMotivo.getStyleClass().add("error");
             }
