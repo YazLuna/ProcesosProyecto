@@ -6,7 +6,7 @@ import javafx.scene.control.RadioButton;
 import java.util.List;
 
 public class Materia {
-    private String NRC;
+    private int NRC;
     private String nombre;
     private String descripcion;
     private String area;
@@ -18,7 +18,7 @@ public class Materia {
         rbSeleccion = new RadioButton("¿Desea llevar la Materia?");
     }
 
-    public String getNRC() {
+    public int getNRC() {
         return NRC;
     }
 
@@ -34,7 +34,7 @@ public class Materia {
         return rbSeleccion;
     }
 
-    public void setNRC(String NRC) {
+    public void setNRC(int NRC) {
         this.NRC = NRC;
     }
 

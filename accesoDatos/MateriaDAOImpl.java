@@ -25,13 +25,13 @@ public class MateriaDAOImpl implements IMateriaDAO{
         try{
             connection = connexion.getConnection();
             PreparedStatement sentenceMateria = connection.prepareStatement("INSERT INTO Materia(NRC, nombre, descripcion, periodo, turno, area) VALUES(?,?,?,?,?,?,)");
-            sentenceMateria.setString(1, materia.getNRC());
+            sentenceMateria.setInt(1, materia.getNRC());
             sentenceMateria.setString(2, materia.getNombre());
             sentenceMateria.setString(3, materia.getDescripcion());
             sentenceMateria.setString(4, materia.getPeriodo());
             sentenceMateria.setString(5, materia.getTurno());
             sentenceMateria.setString(6, materia.getArea());
-            sentenceMateria.executeQuery();
+            sentenceMateria.executeUpdate();
             registrar = true;
         }catch (SQLException ex) {
             Logger.getLogger(MateriaDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +71,7 @@ public class MateriaDAOImpl implements IMateriaDAO{
             results= sentencia.executeQuery();
             while(results.next()){
                 Materia materia = new Materia();
-                materia.setNRC(results.getString("NRC"));
+                materia.setNRC(results.getInt("NRC"));
                 materia.setNombre(results.getString("nombre"));
                 listaMateria.add(materia);
             }

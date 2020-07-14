@@ -50,13 +50,14 @@ public class FXMLRegistrarMateriaController extends FXMLGeneralController implem
 
     public void ingresarDatos() {
         Materia materia = new Materia();
-        materia.setNRC(tftNRC.getText());
+        int nrc = Integer.parseInt(tftNRC.getText());
+        materia.setNRC(nrc);
         materia.setNombre(tftNombre.getText());
         materia.setDescripcion(tfaDescripcion.getText());
         materia.setPeriodo(tftPeriodo.getText());
         materia.setTurno(tftTurno.getText());
         materia.setArea(tftArea.getText());
-        registrarMateria(materia);
+        validarRepetidoRNC(materia);
     }
 
     public void registrarMateria(Materia materia) {
@@ -74,6 +75,8 @@ public class FXMLRegistrarMateriaController extends FXMLGeneralController implem
         int esRepetidoNrc = materiaDAO.validarNRC(tftNRC.getText());
         if(esRepetidoNrc == Numero.UNO.getNumero()){
             generarError("Este NRC ya esta registrado.");
+        }else{
+            registrarMateria(materia);
         }
     }
 

@@ -10,7 +10,7 @@ import logica.ValidacionGeneral;
 public class mainProcesos extends Application {
     @Override
     public void start(Stage stageLogin) throws Exception {
-        Parent rootLogin = FXMLLoader.load(getClass().getResource("/gui/inicioSesion/FXMLIniciarSesion.fxml"));
+        Parent rootLogin = FXMLLoader.load(getClass().getResource("/gui/administrador/FXMLMenuAdministrador.fxml"));
         Scene sceneLogin = new Scene(rootLogin);
         stageLogin.setScene(sceneLogin);
         stageLogin.setResizable(false);
