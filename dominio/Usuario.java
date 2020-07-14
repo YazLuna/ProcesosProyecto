@@ -114,10 +114,4 @@ public class Usuario {
         return esRegistroUsuario;
     }
 
-    public static int getUsuario (String RFC) {
-        UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl();
-        int idUsuario;
-        idUsuario = usuarioDAO.buscarUsuario(RFC);
-        return idUsuario;
-    }
 }
