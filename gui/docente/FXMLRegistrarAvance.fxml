@@ -18,12 +18,7 @@
 
 <AnchorPane prefHeight="504.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.docente.FXMLRegistrarAvanceController">
    <children>
-      <TableView fx:id="tvUnidad" layoutX="173.0" layoutY="107.0" prefHeight="275.0" prefWidth="587.0">
-         <columns>
-            <TableColumn fx:id="tcUnidad" minWidth="32.0" prefWidth="396.0" text="Unidad" />
-            <TableColumn fx:id="tcFechas" minWidth="0.0" prefWidth="190.0" text="Fechas" />
-         </columns>
-      </TableView>
+      <TableView fx:id="tvUnidad" layoutX="173.0" layoutY="107.0" prefHeight="275.0" prefWidth="587.0" />
       <ComboBox fx:id="cbMaterias" layoutX="83.0" layoutY="45.0" prefHeight="25.0" prefWidth="224.0" style="-fx-background-color: #c4c9c3;" />
       <Label layoutX="26.0" layoutY="50.0" text="Materia:">
          <font>
