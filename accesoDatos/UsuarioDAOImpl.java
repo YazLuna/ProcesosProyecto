@@ -23,16 +23,16 @@ public class UsuarioDAOImpl implements IUsuarioDAO{
         boolean seCreoUsuario= false;
         try{
             connection = connexion.getConnection();
-            PreparedStatement sentenceCuenta = connection.prepareStatement("INSERT INTO Usuario(telefono,nombre,apellido" +
+            PreparedStatement sentenceUsuario = connection.prepareStatement("INSERT INTO Usuario(telefono,nombre,apellido" +
                     ",tipo,RFC,fechaNacimiento,genero) VALUES (?,?,?,?,?,?,?)");
-            sentenceCuenta.setString(1, usuario.getTelefono());
-            sentenceCuenta.setString(2, usuario.getNombre());
-            sentenceCuenta.setString(3, usuario.getApellidos());
-            sentenceCuenta.setString(4, usuario.getTipo());
-            sentenceCuenta.setString(5, usuario.getRFC());
-            sentenceCuenta.setString(6, usuario.getFechaNacimiento());
-            sentenceCuenta.setInt(7, usuario.getGenero());
-            sentenceCuenta.executeUpdate();
+            sentenceUsuario.setString(1, usuario.getTelefono());
+            sentenceUsuario.setString(2, usuario.getNombre());
+            sentenceUsuario.setString(3, usuario.getApellidos());
+            sentenceUsuario.setString(4, usuario.getTipo());
+            sentenceUsuario.setString(5, usuario.getRFC());
+            sentenceUsuario.setString(6, usuario.getFechaNacimiento());
+            sentenceUsuario.setInt(7, usuario.getGenero());
+            sentenceUsuario.executeUpdate();
             seCreoUsuario= true;
         }catch (SQLException ex) {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,7 +47,7 @@ public class UsuarioDAOImpl implements IUsuarioDAO{
         int esValidoRepetidoUsuario = Numero.CERO.getNumero();
         try{
             connection = connexion.getConnection();
-            String queryUsuario = "SELECT idUsuario FROM Usuario WHERE telefono=? OR RFC=?";
+            String queryUsuario = "SELECT RFC FROM Usuario WHERE telefono=? OR RFC=?";
             PreparedStatement sentence = connection.prepareStatement(queryUsuario);
             sentence.setString(1, telefono);
             sentence.setString(2, RFC);
@@ -62,25 +62,5 @@ public class UsuarioDAOImpl implements IUsuarioDAO{
             connexion.closeConnection();
         }
         return esValidoRepetidoUsuario;
-    }
-
-    @Override
-    public int buscarUsuario (String RFC){
-        int idUsuario = Numero.CERO.getNumero();
-        try{
-            connection = connexion.getConnection();
-            String queryUsuario = "SELECT idUsuario FROM Usuario WHERE RFC=?";
-            PreparedStatement sentence = connection.prepareStatement(queryUsuario);
-            sentence.setString(1, RFC);
-            results= sentence.executeQuery();
-            if(results.next()){
-                idUsuario = results.getInt("idUsuario");
-            }
-        }catch (SQLException ex){
-            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            connexion.closeConnection();
-        }
-        return idUsuario;
     }
 }

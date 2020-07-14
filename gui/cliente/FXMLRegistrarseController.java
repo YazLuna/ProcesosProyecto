@@ -157,24 +157,19 @@ public class FXMLRegistrarseController extends FXMLGeneralController implements 
         CuentaDAOImpl cuentaDAO = new CuentaDAOImpl();
         boolean esRegistroUsuario = Usuario.registrarUsuario(usuario);
         if(esRegistroUsuario){
-            int idUsuario = Usuario.getUsuario(usuario.getRFC());
-            if(idUsuario != Numero.CERO.getNumero()){
-                boolean esRegistroCuenta = cuentaDAO.crearCuenta(usuario.getCorreo(),usuario.getCorreoAlterno(),usuario.getContrasenia(),idUsuario);
-                if(esRegistroCuenta){
-                    if(seleccionadosNRC.size()>Numero.CERO.getNumero()){
-                        for (int index=Numero.CERO.getNumero(); index<seleccionadosNRC.size();index++){
-                            Materia.registrarMateriaUsuario(seleccionadosNRC.get(index),idUsuario);
-                        }
-                        generarInformation("Registró exitosamente");
-                    }else {
-                        generarInformation("Registró exitosamente");
+            boolean esRegistroCuenta = cuentaDAO.crearCuenta(usuario.getCorreo(),usuario.getCorreoAlterno(),usuario.getContrasenia(),usuario.getRFC());
+            if(esRegistroCuenta){
+                if(seleccionadosNRC.size()>Numero.CERO.getNumero()){
+                    for (int index=Numero.CERO.getNumero(); index<seleccionadosNRC.size();index++){
+                        Materia.registrarMateriaUsuario(seleccionadosNRC.get(index),usuario.getRFC());
                     }
-                    abrirVentana("/gui/inicioSesion/FXMLIniciarSesion.fxml",btnRegistrar);
+                    generarInformation("Registró exitosamente");
                 }else {
-                    generarError("No pudo registrarse");
+                    generarInformation("Registró exitosamente");
                 }
+                abrirVentana("/gui/inicioSesion/FXMLIniciarSesion.fxml",btnRegistrar);
             }else {
-                generarError("No se encontro el usuario");
+                generarError("No pudo registrarse");
             }
         }else {
             generarError("No pudo registrarse");

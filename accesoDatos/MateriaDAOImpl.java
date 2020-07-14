@@ -61,12 +61,12 @@ public class MateriaDAOImpl implements IMateriaDAO{
     }
 
     @Override
-    public boolean registrarUsuarioMateria(int NRC,int idUsuario){
+    public boolean registrarUsuarioMateria(int NRC, String RFC){
         boolean seRegistroMateriaUsuario= false;
         try{
             connection = connexion.getConnection();
             PreparedStatement sentenceMateria = connection.prepareStatement("INSERT INTO Cliente_Materia VALUES (?,?)");
-            sentenceMateria.setInt(1, idUsuario);
+            sentenceMateria.setString(1, RFC);
             sentenceMateria.setInt(2, NRC);
             sentenceMateria.executeUpdate();
             seRegistroMateriaUsuario= true;

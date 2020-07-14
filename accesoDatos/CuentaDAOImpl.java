@@ -43,8 +43,8 @@ public class CuentaDAOImpl implements ICuentaDAO{
         String tipo = "No se encontro el tipo de usuario";
         try{
             connection = connexion.getConnection();
-            String queryTipo = "SELECT tipo FROM Cuenta INNER JOIN Usuario on Cuenta.idUsuario " +
-                    "= Usuario.idUsuario WHERE correo=?";
+            String queryTipo = "SELECT tipo FROM Cuenta INNER JOIN Usuario on Cuenta.RFC " +
+                    "= Usuario.RFC WHERE correo=?";
             PreparedStatement sentence = connection.prepareStatement(queryTipo);
             sentence.setString(1, correo);
             results= sentence.executeQuery();
@@ -60,15 +60,15 @@ public class CuentaDAOImpl implements ICuentaDAO{
     }
 
     @Override
-    public boolean crearCuenta (String correo, String correoAlterno,String contrasenia, int idUsuario){
+    public boolean crearCuenta (String correo, String correoAlterno,String contrasenia, String RFC){
         boolean seCreoCuenta= false;
         try{
             connection = connexion.getConnection();
-            PreparedStatement sentenceCuenta = connection.prepareStatement("INSERT INTO Cuenta(correo,contrasenia,correoAlterno,idUsuario) VALUES (?,?,?,?)");
+            PreparedStatement sentenceCuenta = connection.prepareStatement("INSERT INTO Cuenta(correo,contrasenia,correoAlterno,RFC) VALUES (?,?,?,?)");
             sentenceCuenta.setString(1, correo);
             sentenceCuenta.setString(2, contrasenia);
             sentenceCuenta.setString(3, correoAlterno);
-            sentenceCuenta.setInt(4, idUsuario);
+            sentenceCuenta.setString(4, RFC);
             sentenceCuenta.executeUpdate();
             seCreoCuenta= true;
         }catch (SQLException ex) {
