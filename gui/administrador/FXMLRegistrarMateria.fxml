@@ -23,12 +23,12 @@
             </Label>
          </children>
       </Pane>
-      <TextField layoutX="133.0" layoutY="78.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextField layoutX="133.0" layoutY="283.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextField layoutX="133.0" layoutY="115.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextField layoutX="133.0" layoutY="248.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextField layoutX="133.0" layoutY="320.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextArea layoutX="133.0" layoutY="158.0" prefHeight="74.0" prefWidth="376.0" />
+      <TextField fx:id="tftNRC" layoutX="133.0" layoutY="78.0" prefHeight="25.0" prefWidth="376.0" />
+      <TextField fx:id="tftPeriodo" layoutX="133.0" layoutY="283.0" prefHeight="25.0" prefWidth="376.0" />
+      <TextField fx:id="tftNombre" layoutX="133.0" layoutY="115.0" prefHeight="25.0" prefWidth="376.0" />
+      <TextField fx:id="tftArea" layoutX="133.0" layoutY="248.0" prefHeight="25.0" prefWidth="376.0" />
+      <TextField fx:id="tftTurno" layoutX="133.0" layoutY="320.0" prefHeight="25.0" prefWidth="376.0" />
+      <TextArea fx:id="tfaDescripcion" layoutX="133.0" layoutY="158.0" prefHeight="74.0" prefWidth="376.0" />
       <Label layoutX="79.0" layoutY="82.0" text="NRC:">
          <font>
             <Font name="Arial Bold" size="15.0" />

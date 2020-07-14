@@ -6,7 +6,7 @@ import javafx.scene.control.RadioButton;
 import java.util.List;
 
 public class Materia {
-    private int NRC;
+    private String NRC;
     private String nombre;
     private String descripcion;
     private String area;
@@ -18,7 +18,7 @@ public class Materia {
         rbSeleccion = new RadioButton("¿Desea llevar la Materia?");
     }
 
-    public int getNRC() {
+    public String getNRC() {
         return NRC;
     }
 
@@ -34,7 +34,7 @@ public class Materia {
         return rbSeleccion;
     }
 
-    public void setNRC(int NRC) {
+    public void setNRC(String NRC) {
         this.NRC = NRC;
     }
 
@@ -76,10 +76,10 @@ public class Materia {
         return esRegistroMateriaUsuario;
     }
 
-    public static boolean registrarMateriaAdministrador(int NRC,String nombre,String descripcion,String area,String periodo,String turno){
+    public static boolean registrarMateriaAdministrador(Materia materia){
         boolean registrar;
         MateriaDAOImpl materiaDAO = new MateriaDAOImpl();
-        registrar = materiaDAO.registrarMateria(NRC, nombre, descripcion, area, periodo, turno);
+        registrar = materiaDAO.registrarMateria(materia);
         return registrar;
     }
 }
