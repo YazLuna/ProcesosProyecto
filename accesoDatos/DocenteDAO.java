@@ -1,6 +1,8 @@
 package accesoDatos;
 
 import dominio.Docente;
+import gui.util.alerts.OperationAlert;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,9 @@ public class DocenteDAO {
     public List<Docente> getAllDocentes() {
         List<Docente> listaDocentes = new ArrayList<>();
         try( Connection conn = connexion.getConnection() ){
-            String queryDocente = "SELECT ACA.numeroPersonal, ACA.perfil, ACA.RFC, US.nombre, US.apellido, US.telefono, US.fechaNacimiento, US.genero, CU.correo, CU.correoAlterno, CU.contrasenia FROM Academico AS ACA INNER JOIN Usuario AS US INNER JOIN Cuenta AS CU ON ACA.RFC = CU.RFC WHERE ACA.Tipo = ? AND US.tipo = ?";
+            String queryDocente = "SELECT ACA.numeroPersonal, ACA.perfil, ACA.RFC, US.nombre, US.apellido, US.telefono, US.fechaNacimiento, US.genero, CU.correo, CU.correoAlterno, CU.contrasenia FROM Academico AS ACA INNER JOIN Usuario AS US ON US.tipo = ? INNER JOIN Cuenta AS CU ON ACA.RFC = CU.RFC";
             PreparedStatement sentencia = conn.prepareStatement(queryDocente);
             sentencia.setString(1, "Docente");
-            sentencia.setString(2, "Docente");
             results = sentencia.executeQuery();
             while(results.next()){
                 Docente docente = new Docente();
@@ -35,6 +36,7 @@ public class DocenteDAO {
                 docente.setCorreoAlterno( results.getString("CU.correoAlterno") );
                 docente.setContrasenia( results.getString("CU.contrasenia") );
                 docente.setGenero( results.getInt("US.genero") );
+                docente.setPerfil( results.getString("ACA.perfil") );
                 listaDocentes.add(docente);
             }
         }catch (SQLException ex){
@@ -46,8 +48,7 @@ public class DocenteDAO {
         return listaDocentes;
     }
 
-    public int agregarDocente(Docente docente) throws SQLException {
-        int idDocente = 0;
+    public void agregarDocente(Docente docente) throws SQLException {
         try( Connection conn = connexion.getConnection() ){
             String statement = "CALL agregarDocente(?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?)";
             PreparedStatement agregarDocente = conn.prepareStatement(statement);
@@ -57,22 +58,16 @@ public class DocenteDAO {
             agregarDocente.setString(4, docente.getTelefono() );
             agregarDocente.setString(5, docente.getCorreo() );
             agregarDocente.setString( 6, docente.getCorreoAlterno() );
-            agregarDocente.setString( 7, docente.getCorreoAlterno() );
-            agregarDocente.setString( 8, docente.getFechaNacimiento() );
-            agregarDocente.setString( 9, docente.getNumeroPersonal() );
-            agregarDocente.setString( 10, docente.getContrasenia() );
+            agregarDocente.setString( 7, docente.getFechaNacimiento() );
+            agregarDocente.setString( 8, docente.getNumeroPersonal() );
+            agregarDocente.setString( 9, docente.getContrasenia() );
             agregarDocente.setInt( 10, docente.getGenero() );
             agregarDocente.setString( 11, docente.getTipo() );
+            agregarDocente.setString( 12, docente.getPerfil() );
             agregarDocente.executeUpdate();
-            statement = "SELECT LAST_INSERT_ID()";
-            agregarDocente = conn.prepareStatement(statement);
-            ResultSet result = agregarDocente.executeQuery();
-            result.next();
-            idDocente = result.getInt(1);
-            conn.commit();
+            OperationAlert.showSuccessfullAlert("Registro exitoso", "Se ha registrado al docente en el sistema");
         } catch (SQLException sqlException) {
             throw sqlException;
         }
-        return idDocente;
     }
 }
