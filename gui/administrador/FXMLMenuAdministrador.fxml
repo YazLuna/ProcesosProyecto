@@ -7,11 +7,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="283.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.administrador.FXMLMenuAdministradorController">
+<AnchorPane prefHeight="424.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.administrador.FXMLMenuAdministradorController">
    <children>
-      <Pane prefHeight="97.0" prefWidth="606.0" style="-fx-background-color: #6bb3f2;">
+      <Pane prefHeight="78.0" prefWidth="606.0" style="-fx-background-color: #6bb3f2;">
          <children>
-            <Label layoutX="162.0" layoutY="32.0" text="Menu Administrador" textFill="WHITE">
+            <Label layoutX="162.0" layoutY="23.0" text="Menu Administrador" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="29.0" />
                </font>
@@ -23,14 +23,49 @@
             </Button>
          </children>
       </Pane>
-      <Button fx:id="btnRegistrarMateria" layoutX="183.0" layoutY="125.0" mnemonicParsing="false" onAction="#registrarMateria" text="Registrar materia">
+      <Button fx:id="btnRegistrarMateria" layoutX="27.0" layoutY="157.0" mnemonicParsing="false" onAction="#registrarMateria" prefHeight="110.0" prefWidth="157.0" style="-fx-background-color: #6bb3f2;" text="Registrar" textFill="WHITE">
          <font>
-            <Font name="Arial Bold" size="25.0" />
+            <Font name="Arial Bold" size="27.0" />
          </font>
       </Button>
-      <Button fx:id="btnRegistrarDocente" layoutX="180.0" layoutY="204.0" mnemonicParsing="false" onAction="#registrarDocente" text="Registrar docente">
+      <Button fx:id="btnRegistrarDocente" layoutX="225.0" layoutY="157.0" mnemonicParsing="false" onAction="#registrarDocente" prefHeight="110.0" prefWidth="157.0" style="-fx-background-color: #6bb3f2;" text="Registrar" textFill="WHITE">
          <font>
-            <Font name="Arial Bold" size="25.0" />
+            <Font name="Arial Bold" size="27.0" />
+         </font>
+      </Button>
+      <Button layoutX="27.0" layoutY="285.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="157.0" style="-fx-background-color: #6bb3f2;" text="Modificar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="27.0" />
+         </font>
+      </Button>
+      <Button layoutX="225.0" layoutY="285.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="157.0" style="-fx-background-color: #6bb3f2;" text="Modificar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="27.0" />
+         </font>
+      </Button>
+      <Label layoutX="54.0" layoutY="95.0" text="Materia">
+         <font>
+            <Font name="Arial Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="246.0" layoutY="95.0" text="Docente">
+         <font>
+            <Font name="Arial Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="440.0" layoutY="95.0" text="Director">
+         <font>
+            <Font name="Arial Bold" size="29.0" />
+         </font>
+      </Label>
+      <Button layoutX="417.0" layoutY="157.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="157.0" style="-fx-background-color: #6bb3f2;" text="Registrar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="27.0" />
+         </font>
+      </Button>
+      <Button layoutX="417.0" layoutY="285.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="157.0" style="-fx-background-color: #6bb3f2;" text="Modificar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="27.0" />
          </font>
       </Button>
    </children>
