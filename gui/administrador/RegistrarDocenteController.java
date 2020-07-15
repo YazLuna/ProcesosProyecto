@@ -1,7 +1,11 @@
 package gui.administrador;
 
+import accesoDatos.CuentaDAOImpl;
 import accesoDatos.DocenteDAO;
 import dominio.Docente;
+import dominio.Genero;
+import dominio.Numero;
+import dominio.Usuario;
 import gui.util.alerts.OperationAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,33 +16,17 @@ import javafx.scene.control.*;
 import gui.util.Controller;
 import javafx.scene.control.cell.PropertyValueFactory;
 import logica.ValidacionGeneral;
-import accesoDatos.CuentaDAOImpl;
-import dominio.Genero;
-import dominio.Materia;
-import dominio.Numero;
-import dominio.Usuario;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import org.apache.commons.codec.binary.Hex;
 
-import java.io.IOException;
+import javax.print.Doc;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import gui.FXMLGeneralController;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import logica.ValidacionGeneral;
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.ResourceBundle;
 
 import static gui.FXMLGeneralController.*;
 
@@ -69,6 +57,7 @@ public class RegistrarDocenteController extends Controller implements Initializa
         setDataToDocentetableView();
         setTableComponents();
         comenzarComponentes();
+        fechaNacimientoDatePicker.setEditable(false);
     }
 
     public void showStage() {
@@ -86,7 +75,7 @@ public class RegistrarDocenteController extends Controller implements Initializa
         removerEstilos();
         if( notEmpty() ){
             if( validarDatos() ){
-                
+                validarCorreos();
             }else{
                 OperationAlert.showUnsuccessfullAlert("datos invalios", "La informacion ingresada no es valida");
             }
@@ -96,7 +85,7 @@ public class RegistrarDocenteController extends Controller implements Initializa
     }
 
     @FXML
-    void crearComponents(ActionEvent event) {
+    void clearComponents(ActionEvent event) {
         idTextField.setText("");
         nameTextField.setText("");
         lastnameTextField.setText("");
@@ -105,7 +94,8 @@ public class RegistrarDocenteController extends Controller implements Initializa
         emailTextField.setText("");
         altEmailTextField.setText("");
         perfilTextField.setText("");
-        registerButton.setDisable(false);
+        contraseniaTextField.setText("");
+        habilitarComponentes();
     }
 
     public void comenzarComponentes (){
@@ -115,6 +105,8 @@ public class RegistrarDocenteController extends Controller implements Initializa
         prohibitNumberTextField(lastnameTextField);
         limitTextField(phoneNumberTextField,10);
         prohibitWordTextField(phoneNumberTextField);
+        limitTextField(idTextField,10);
+        prohibitWordTextField(idTextField);
         limitTextField(emailTextField,150);
         prohibitSpacesTextField(emailTextField);
         limitTextField(altEmailTextField,150);
@@ -123,7 +115,44 @@ public class RegistrarDocenteController extends Controller implements Initializa
         prohibitSpacesTextField(contraseniaTextField);
         limitTextField(rfcTextField,15);
         prohibitSpacesTextField(rfcTextField);
+        limitTextField(perfilTextField,30);
+        prohibitNumberTextField(perfilTextField);
         fechaNacimientoDatePicker.getEditor().getStyleClass().add("details");
+    }
+
+    public void ingresarDatos (){
+        ValidacionGeneral validacionGeneral = new ValidacionGeneral();
+        Docente docente = new Docente();
+        docente.setNumeroPersonal(idTextField.getText());
+        docente.setNombre(validacionGeneral.eliminarEspacios(nameTextField.getText()));
+        docente.setApellidos(validacionGeneral.eliminarEspacios(lastnameTextField.getText()));
+        docente.setTelefono(phoneNumberTextField.getText());
+        docente.setTipo("Docente");
+        docente.setRFC(rfcTextField.getText());
+        docente.setCorreo(emailTextField.getText());
+        docente.setCorreoAlterno(altEmailTextField.getText());
+        String contraseniaEncriptada = encryptPassword(contraseniaTextField.getText());
+        docente.setContrasenia(contraseniaTextField.getText());
+        String fecha = fechaNacimientoDatePicker.getEditor().getText();
+        String[] fechaNacimiento = fecha.split("/");
+        String formatoFecha = fechaNacimiento[2]+"-"+fechaNacimiento[1]+"-"+fechaNacimiento[0];
+        docente.setFechaNacimiento(formatoFecha);
+        if(femeninoRadioButton.isSelected()){
+            docente.setGenero(Genero.MUJER.getGenero());
+        }else {
+            docente.setGenero(Genero.HOMBRE.getGenero());
+        }
+        docente.setPerfil(perfilTextField.getText());
+        registarDocente(docente);
+    }
+
+    public void registarDocente(Docente docente){
+        DocenteDAO docenteDAO = new DocenteDAO();
+        try {
+            docenteDAO.agregarDocente(docente);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private  boolean notEmpty(){
@@ -143,6 +172,15 @@ public class RegistrarDocenteController extends Controller implements Initializa
             nameTextField.getStyleClass().add("error");
             esValidoDatos=false;
         }
+
+        boolean esValidoPerfil = validacionGeneral.validarNombre(perfilTextField.getText());
+        if(esValidoNombre){
+            perfilTextField.getStyleClass().add("ok");
+        }else{
+            perfilTextField.getStyleClass().add("error");
+            esValidoDatos=false;
+        }
+
         boolean esValidoApellidos = validacionGeneral.validarApellidos(lastnameTextField.getText());
         if(esValidoApellidos){
             lastnameTextField.getStyleClass().add("ok");
@@ -203,6 +241,14 @@ public class RegistrarDocenteController extends Controller implements Initializa
             esValidoDatos=false;
         }
 
+        boolean esValidoNumeroPersonal = validacionGeneral.validarTelefono(idTextField.getText());
+        if (esValidoTelefono){
+            idTextField.getStyleClass().add("ok");
+        } else{
+            idTextField.getStyleClass().add("error");
+            esValidoDatos=false;
+        }
+
         boolean seleccionMujer = femeninoRadioButton.isSelected();
         boolean seleccionHombre = masculinoRadioButton.isSelected();
         if(!seleccionHombre && !seleccionMujer){
@@ -235,6 +281,7 @@ public class RegistrarDocenteController extends Controller implements Initializa
     }
 
     private void setDataToComponents(Docente selectedDocente) {
+        desabilitarComponentes();
         registerButton.setDisable(true);
         idTextField.setText( selectedDocente.getNumeroPersonal() );
         nameTextField.setText( selectedDocente.getNombre() );
@@ -246,6 +293,11 @@ public class RegistrarDocenteController extends Controller implements Initializa
         fechaNacimientoDatePicker.setValue( LocalDate.parse( selectedDocente.getFechaNacimiento() ) );
         contraseniaTextField.setText( selectedDocente.getContrasenia() );
         perfilTextField.setText( selectedDocente.getPerfil() );
+        if( selectedDocente.getGenero() != 1 ){
+            femeninoRadioButton.setSelected(true);
+        }else{
+            masculinoRadioButton.setSelected(true);
+        }
 
     }
 
@@ -268,6 +320,124 @@ public class RegistrarDocenteController extends Controller implements Initializa
         fechaNacimientoDatePicker.getEditor().getStyleClass().remove("error");
         femeninoRadioButton.getStyleClass().remove("error");
         masculinoRadioButton.getStyleClass().remove("error");
+    }
+
+    private void desabilitarComponentes(){
+        idTextField.setDisable(true);
+        nameTextField.setDisable(true);
+        lastnameTextField.setDisable(true);
+        rfcTextField.setDisable(true);
+        phoneNumberTextField.setDisable(true);
+        emailTextField.setDisable(true);
+        altEmailTextField.setDisable(true);
+        fechaNacimientoDatePicker.setDisable(true);
+        contraseniaTextField.setDisable(true);
+        perfilTextField.setDisable(true);
+        registerButton.setDisable(true);
+    }
+
+    private void habilitarComponentes(){
+        idTextField.setDisable(false);
+        nameTextField.setDisable(false);
+        lastnameTextField.setDisable(false);
+        rfcTextField.setDisable(false);
+        phoneNumberTextField.setDisable(false);
+        emailTextField.setDisable(false);
+        altEmailTextField.setDisable(false);
+        fechaNacimientoDatePicker.setDisable(false);
+        contraseniaTextField.setDisable(false);
+        perfilTextField.setDisable(false);
+        registerButton.setDisable(false);
+    }
+
+    public void validarCorreos(){
+        if(emailTextField.getText().equals(altEmailTextField.getText())){
+            altEmailTextField.getStyleClass().remove("ok");
+            emailTextField.getStyleClass().remove("ok");
+            altEmailTextField.getStyleClass().add("error");
+            emailTextField.getStyleClass().add("error");
+            OperationAlert.showUnsuccessfullAlert("Correos repetidos", "El correo y el correo alterno es el muismo");
+        }else {
+            concidenciaRFCFechaNacimiento();
+        }
+    }
+
+    public void concidenciaRFCFechaNacimiento() {
+        ValidacionGeneral validacionGeneral = new ValidacionGeneral();
+        boolean esIgualRFC = validacionGeneral.validarConcidenciaRFC(rfcTextField.getText(), fechaNacimientoDatePicker.getEditor().getText());
+        if(esIgualRFC){
+            validarRepetidoCorreo();
+        }else {
+            rfcTextField.getStyleClass().remove("ok");
+            fechaNacimientoDatePicker.getEditor().getStyleClass().remove("ok");
+            rfcTextField.getStyleClass().add("error");
+            fechaNacimientoDatePicker.getEditor().getStyleClass().add("error");
+            OperationAlert.showUnsuccessfullAlert("Error con RFC y fecha de nacimiento", "El RFC no conincide con la fecha de nacimiento ingresada");
+        }
+    }
+
+    public void validarRepetidoCorreo (){
+        CuentaDAOImpl cuentaDAO = new CuentaDAOImpl();
+        int esRepetidoCorreo = cuentaDAO.validarCorreoUsuario(emailTextField.getText());
+        if(esRepetidoCorreo == Numero.CERO.getNumero()){
+            validarRepetidoCorreoAlterno();
+        }else {
+            if(esRepetidoCorreo == Numero.UNO.getNumero()){
+                emailTextField.getStyleClass().remove("ok");
+                emailTextField.getStyleClass().add("error");
+                OperationAlert.showUnsuccessfullAlert("Correo registrado", "El correo electronico ingresado ya esta registrado");
+            }else {
+                OperationAlert.showLostConnectionAlert();
+            }
+        }
+    }
+
+    public void validarRepetidoCorreoAlterno (){
+        CuentaDAOImpl cuentaDAO = new CuentaDAOImpl();
+        int esRepetidoCorreoAlterno = cuentaDAO.validarCorreoUsuario(altEmailTextField.getText());
+        if(esRepetidoCorreoAlterno == Numero.CERO.getNumero()){
+            validarTelefonoRFCUsuario();
+        }else {
+            if(esRepetidoCorreoAlterno == Numero.UNO.getNumero()){
+                altEmailTextField.getStyleClass().remove("ok");
+                altEmailTextField.getStyleClass().add("error");
+                OperationAlert.showUnsuccessfullAlert("Correo alterno registrado", "El correo electronico alterno ingresado ya esta registrado");
+            }else {
+                OperationAlert.showLostConnectionAlert();
+            }
+        }
+    }
+
+    public void validarTelefonoRFCUsuario (){
+        int esRepetidoUsuario = Usuario.validarRepetidoUsuario(phoneNumberTextField.getText(), rfcTextField.getText());
+        if(esRepetidoUsuario == Numero.CERO.getNumero()){
+            ingresarDatos();
+        }else {
+            if(esRepetidoUsuario == Numero.UNO.getNumero()){
+                phoneNumberTextField.getStyleClass().remove("ok");
+                rfcTextField.getStyleClass().remove("ok");
+                phoneNumberTextField.getStyleClass().add("error");
+                rfcTextField.getStyleClass().add("error");
+                OperationAlert.showUnsuccessfullAlert("RFC o Telefono registrado", "El RFC o el Telefono ingresado ya estan registrados en el sistema");
+            }else {
+                OperationAlert.showLostConnectionAlert();
+            }
+        }
+    }
+
+    public String encryptPassword(String password) {
+        String passwordEncrypt = null;
+        try {
+            MessageDigest md;
+            md = MessageDigest.getInstance("SHA-512");
+            md.update(password.getBytes());
+            byte[] mb = md.digest();
+            passwordEncrypt = String.valueOf(Hex.encodeHex(mb));
+        } catch (NoSuchAlgorithmException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create an encrypt Password", e);
+        }
+        return passwordEncrypt;
     }
 
 }

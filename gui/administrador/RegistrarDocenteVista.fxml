@@ -98,7 +98,7 @@
          <children>
             <Button fx:id="registerButton" mnemonicParsing="false" onAction="#registerButtonPressed" text="Registrar" />
             <Separator orientation="VERTICAL" prefHeight="100.0" prefWidth="51.0" />
-            <Button fx:id="clearComponents" mnemonicParsing="false" onAction="#crearComponents" text="limpiar" />
+            <Button fx:id="clearComponents" mnemonicParsing="false" onAction="#clearComponents" text="limpiar" />
             <Separator orientation="VERTICAL" prefHeight="100.0" prefWidth="43.0" />
             <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancelar" />
          </children>
