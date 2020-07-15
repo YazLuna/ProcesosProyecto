@@ -27,7 +27,8 @@ public class FXMLRegistrarMateriaController extends FXMLGeneralController implem
     public void cerrarSesion() { cerrarSesion(); }
 
     public void cancelar() {
-        generarCancelacion("¿Seguro que desea cancelar?", btnCancelar, "/gui/administrador/FXMLMenuAdministrador.fxml");
+        MenuAdministradorController menuAdministradorController = new MenuAdministradorController();
+        menuAdministradorController.showStage();
     }
 
     public void comenzarComponentes() {

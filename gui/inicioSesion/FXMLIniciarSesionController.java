@@ -1,6 +1,7 @@
 package gui.inicioSesion;
 
 import dominio.SolicitudModificacion;
+import gui.administrador.MenuAdministradorController;
 import gui.docente.FXMLMenuDocenteController;
 import gui.docente.FXMLSolicitarEdicionController;
 import javafx.fxml.FXML;
@@ -52,7 +53,8 @@ public class FXMLIniciarSesionController extends FXMLGeneralController implement
 							abrirVentana("/gui/cliente/FXMLMenuCliente.fxml", btnIniciarSesion);
 							break;
 						case "Administrador":
-							abrirVentana("/gui/administrador/FXMLMenuAdministrador.fxml", btnIniciarSesion);
+							MenuAdministradorController menuAdministradorController = new MenuAdministradorController();
+							menuAdministradorController.showStage();
 							break;
 						default: generarInformation(tipo);
 					}
