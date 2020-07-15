@@ -17,6 +17,7 @@ import gui.util.Controller;
 import javafx.scene.control.cell.PropertyValueFactory;
 import logica.ValidacionGeneral;
 import org.apache.commons.codec.binary.Hex;
+import org.omg.PortableInterceptor.AdapterManagerIdHelper;
 
 import javax.print.Doc;
 import java.net.URL;
@@ -67,6 +68,13 @@ public class RegistrarDocenteController extends Controller implements Initializa
 
     @FXML
     void cancelButtonPressed(ActionEvent event) {
+        stage.close();
+        MenuAdministradorController menuAdministradorController = new MenuAdministradorController();
+        menuAdministradorController.showStage();
+    }
+
+    @FXML
+    void cerrarSesion(ActionEvent event) {
         stage.close();
     }
 
@@ -132,7 +140,7 @@ public class RegistrarDocenteController extends Controller implements Initializa
         docente.setCorreo(emailTextField.getText());
         docente.setCorreoAlterno(altEmailTextField.getText());
         String contraseniaEncriptada = encryptPassword(contraseniaTextField.getText());
-        docente.setContrasenia(contraseniaTextField.getText());
+        docente.setContrasenia(contraseniaEncriptada);
         String fecha = fechaNacimientoDatePicker.getEditor().getText();
         String[] fechaNacimiento = fecha.split("/");
         String formatoFecha = fechaNacimiento[2]+"-"+fechaNacimiento[1]+"-"+fechaNacimiento[0];

@@ -20,7 +20,7 @@ public class DocenteDAO {
     public List<Docente> getAllDocentes() {
         List<Docente> listaDocentes = new ArrayList<>();
         try( Connection conn = connexion.getConnection() ){
-            String queryDocente = "SELECT ACA.numeroPersonal, ACA.perfil, ACA.RFC, US.nombre, US.apellido, US.telefono, US.fechaNacimiento, US.genero, CU.correo, CU.correoAlterno, CU.contrasenia FROM Academico AS ACA INNER JOIN Usuario AS US ON US.tipo = ? INNER JOIN Cuenta AS CU ON ACA.RFC = CU.RFC";
+            String queryDocente = "SELECT ACA.numeroPersonal, ACA.perfil, ACA.RFC, US.nombre, US.apellido, US.telefono, US.fechaNacimiento, US.genero, CU.correo, CU.correoAlterno, CU.contrasenia FROM Usuario AS US INNER JOIN Cuenta AS CU ON US.RFC = CU.RFC INNER JOIN Academico AS ACA ON ACA.RFC = US.RFC WHERE US.tipo = ?";
             PreparedStatement sentencia = conn.prepareStatement(queryDocente);
             sentencia.setString(1, "Docente");
             results = sentencia.executeQuery();
@@ -44,7 +44,6 @@ public class DocenteDAO {
         }finally{
             connexion.closeConnection();
         }
-        System.out.println(listaDocentes.size());
         return listaDocentes;
     }
 

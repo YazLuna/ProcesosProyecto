@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Button?>
+<?import java.net.URL?>
+
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.cliente.FXMLElegirCursosController">
+    <stylesheets>
+        <URL value="@../fxmlEstilosGeneral.css" />
+    </stylesheets>
+       <Pane minWidth="-Infinity" prefHeight="93.0" prefWidth="600.0" style="-fx-background-color: #6bb3f2;">
+                  <Label layoutX="216.0" layoutY="31.0" text="Elegir Cursos" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="28.0" />
+                     </font>
+                  </Label>
+         </Pane>
+         <TableView fx:id="tvCursos" layoutX="37.0" layoutY="127.0" prefHeight="200.0" prefWidth="526.0" />
+         <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="65.0" layoutX="100.0" layoutY="374.0">
+                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardar" style="-fx-background-color: #00bb2d;" text="Guardar" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="17.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" style="-fx-background-color: #ff0000;" text="Cancelar" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="17.0" />
+                     </font>
+                  </Button>
+         </FlowPane>
+</AnchorPane>
