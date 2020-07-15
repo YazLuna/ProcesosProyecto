@@ -1,5 +1,8 @@
 package gui.inicioSesion;
 
+import dominio.SolicitudModificacion;
+import gui.docente.FXMLMenuDocenteController;
+import gui.docente.FXMLSolicitarEdicionController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,6 +43,9 @@ public class FXMLIniciarSesionController extends FXMLGeneralController implement
 					String tipo = cuentaDAO.tipoUsuario(correo,contrasenia);
 					switch (tipo) {
 						case "Docente":
+							int numeroPersonal = SolicitudModificacion.buscarDocente(correo,contrasenia);;
+							FXMLMenuDocenteController.numeroPersonal = numeroPersonal;
+							FXMLSolicitarEdicionController.numeroPersonal = numeroPersonal;
 							abrirVentana("/gui/docente/FXMLMenuDocente.fxml", btnIniciarSesion);
 							break;
 						case "Cliente":
